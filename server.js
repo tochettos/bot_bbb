@@ -38,9 +38,18 @@ function action(event){
        // Caso as condições não sejam atendidas, retornar a função vazia, indo para o próximo tweet
      }
 }
+
+console.log("criando Stream..");
+
 var stream = Tweet.stream('statuses/filter', {track: '17012022teste'}) 
 // Aqui dizemos para o programa verificar em modo streaming
+
+console.log("iniciando Stream..");
+
 stream.on('data', action) 
 // Ao receber as informações (`data`), passar elas para a função action e chamar a mesma.
+
+console.log("ativando log error Stream..");
+
 stream.on('error', erro => console.log("Erro: "+ erro)) 
 // Caso haja algum erro, jogar o erro no console para verificarmos.
