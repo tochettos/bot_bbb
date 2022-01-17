@@ -29,8 +29,9 @@ function action(tweet){
     // var txt = txt.replace(/@myTwitterHandle/g, "");
 
 
-	return console.log("Iniciando uma curtida e uma resposta :" + name);
-
+	console.log("Iniciando uma curtida e uma resposta :" + name);
+	
+	
 	Tweet.post('favorites/create', {id: id_str}, erro => { // Dar like no tweet
       if(erro){
         return console.log("Erro no like: " + erro) 
@@ -43,8 +44,7 @@ function action(tweet){
     })
 
 
-
-    // Iniciar um reply
+// Iniciar um reply
     var reply = "Opa! Escutei as palavras mágicas *Livro e *BBB! @" + name + ' ' + ' Vai ler um livro ao invés de BBB esse ano ?';
     var params             = {
                               status: reply,
@@ -58,6 +58,7 @@ function action(tweet){
         console.log('Tweeted: ' + params.status);
       }
     })
+    
 	 
 	 
   }else {
