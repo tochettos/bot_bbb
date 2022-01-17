@@ -1,3 +1,5 @@
+console.log("Starting the Bot..");
+
 const Twitter = require('twitter')
 require('dotenv').config()
 
