@@ -29,11 +29,14 @@ function action(tweet){
     // var txt = txt.replace(/@myTwitterHandle/g, "");
 
 
+	return console.log("Iniciando uma curtida e uma resposta :" = name);
+
 	Tweet.post('favorites/create', {id: id_str}, erro => { // Dar like no tweet
       if(erro){
         return console.log("Erro no like: " + erro) 
         // Caso haja algum erro, jogar no console para verificarmos.
       }else {
+		  
         //return console.log("Tweet Likado. URL do Tweet: " + `https:twitter.com/${screen_name}/status/${id_str}`) 
         // Se der tudo certo, avisar no console com o URL do tweet original
       }
@@ -41,7 +44,7 @@ function action(tweet){
 
 
 
-    // Start a reply back to the sender
+    // Iniciar um reply
     var reply = "Opa! Escutei as palavras mágicas *Livro e *BBB! @" + name + ' ' + ' Vai ler um livro ao invés de BBB esse ano ?';
     var params             = {
                               status: reply,
