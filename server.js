@@ -10,29 +10,53 @@ const Tweet = new Twitter({
   access_token_secret:  process.env.BOT_ACESS_TOKEN_SECRET,
 })
 
-function action(event){
-  const {retweeted_status, id_str, screen_name, is_quote_status} = event;
-  const {name} = event.user;
+function action(tweet){
+  const {retweeted_status, id_str, screen_name, is_quote_status} = tweet;
 
-  if(!retweeted_status && !is_quote_status){ // Se o status não for um retweet normal, nem um retweet com comentário
-    Tweet.post(`statuses/retweet/${id_str}`, erro => { 
-      if(erro){
-        console.log("Erro no retweet: " + erro)
-        // Caso haja um erro, informamos no console o mesmo
-      }else {
-        console.log("RETWEETADO: ", `https://twitter.com/${name}/status/${id_str}`)
-        // Se der tudo certo, informamos no console junto com o URL do tweet retweetado
-      }
-    }) // Retweetar o tweet, e caso haja um erro, avisar no console. Se não, avisar no console que deu certo com o id do tweet
-    Tweet.post('favorites/create', {id: id_str}, erro => { // Dar like no tweet
+	//console.log ('Validando condicoes Tweet:' +tweet.user.id);
+	//console.log('Texto do Tweet:' + tweet.text);
+
+  if(!retweeted_status && !is_quote_status && tweet.user.id != '1483146482844934100' ){ // Se o status não for um retweet normal, nem um retweet com comentário
+    
+  // Who sent the tweet?
+    var name = tweet.user.screen_name;
+    // What is the text?
+    // var txt = tweet.text;
+    // the status update or tweet ID in which we will reply
+    var nameID  = tweet.id_str;
+
+     // Get rid of the @ mention
+    // var txt = txt.replace(/@myTwitterHandle/g, "");
+
+
+	Tweet.post('favorites/create', {id: id_str}, erro => { // Dar like no tweet
       if(erro){
         return console.log("Erro no like: " + erro) 
         // Caso haja algum erro, jogar no console para verificarmos.
       }else {
-        return console.log("Tweet Likado. URL do Tweet: " + `https:twitter.com/${screen_name}/status/${id_str}`) 
+        //return console.log("Tweet Likado. URL do Tweet: " + `https:twitter.com/${screen_name}/status/${id_str}`) 
         // Se der tudo certo, avisar no console com o URL do tweet original
       }
-    }) 
+    })
+
+
+
+    // Start a reply back to the sender
+    var reply = "Opa! Escutei as palavras mágicas *Livro e *BBB! @" + name + ' ' + ' Vai ler um livro ao invés de BBB esse ano ?';
+    var params             = {
+                              status: reply,
+                              in_reply_to_status_id: nameID
+                             };
+
+    Tweet.post('statuses/update', params, function(err, data, response) {
+      if (err !== undefined) {
+        console.log(err);
+      } else {
+        console.log('Tweeted: ' + params.status);
+      }
+    })
+	 
+	 
   }else {
        return 
        // Caso as condições não sejam atendidas, retornar a função vazia, indo para o próximo tweet
@@ -41,7 +65,7 @@ function action(event){
 
 console.log("criando Stream..");
 
-var stream = Tweet.stream('statuses/filter', {track: '17012022teste'}) 
+var stream = Tweet.stream('statuses/filter', {track: 'BBB livro, BBB21 livro'}) 
 // Aqui dizemos para o programa verificar em modo streaming
 
 console.log("iniciando Stream..");
