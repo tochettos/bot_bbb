@@ -29,7 +29,7 @@ function action(tweet){
     // var txt = txt.replace(/@myTwitterHandle/g, "");
 
 
-	return console.log("Iniciando uma curtida e uma resposta :" = name);
+	return console.log("Iniciando uma curtida e uma resposta :" + name);
 
 	Tweet.post('favorites/create', {id: id_str}, erro => { // Dar like no tweet
       if(erro){
