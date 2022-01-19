@@ -14,9 +14,9 @@ function action(tweet){
   const {retweeted_status, id_str, screen_name, is_quote_status} = tweet;
 
 	// Quem enviou o tweet?
-	console.log ('Validando condicoes Tweet:' +tweet.user.id);
+	//console.log ('Validando condicoes Tweet:' +tweet.user.id);
 	//Qual éo texto?
-	console.log('Texto do Tweet:' + tweet.text);
+	//console.log('Texto do Tweet:' + tweet.text);
 
   if(!retweeted_status && !is_quote_status && tweet.user.id != '1483146482844934100' ){ // Se o status não for um retweet normal, nem um retweet com comentário
     
